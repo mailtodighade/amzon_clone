@@ -1,21 +1,31 @@
-const express = require('express');
-const cors  = require('cors')
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import products from "./data/products.js";
+import { notFound, errorHandler } from "./middleware/errrorMiddleware.js";
+import connectDB from "./database/db.js";
+
+//routes import
+import productRoute from "./routes/productRoute.js";
+
 const app = express();
-const PORT = 5000;
-const products = require('./data/products');
 
+dotenv.config();
 
+//connect to the database..
+connectDB();
 
-app.use(cors())
+app.use(cors());
 //routes...
-app.get('/', (req, res) =>{
-    res.status(200).json({message: 'hello there!', data: null})
-})
 
-app.get('/api/v1/products', (req, res) =>{
-    res.status(200).json({message: 'fetched data successfully!', data: products})
-})
+app.use("/api/v1/products", productRoute);
+app.use(notFound);
 
-app.listen(PORT, () =>{
-    console.log(`server is listening to port ${PORT}`)
-})
+app.use(errorHandler);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(
+    `server is runnig on ${process.env.NODE_ENV} and listening to port ${PORT}`
+  );
+});
