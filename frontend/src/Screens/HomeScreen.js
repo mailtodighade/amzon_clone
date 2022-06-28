@@ -1,53 +1,80 @@
-import React, { useEffect, useState } from 'react';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-//import productList from '../data/products'
+import React, { useEffect, useState } from "react";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import { useDispatch, useSelector } from "react-redux";
+import ProductCard from "../components/ProductCard";
+import { listProducts } from "../action/ProductAction";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import ErrorScreeen from "./ErrorScreeen";
 
-import ProductCard from '../components/ProductCard';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import axios from 'axios';
 const HomeScreen = () => {
-  const [productList, setProductList] = useState([])
+  const dispatch = useDispatch();
 
-useEffect(() => {
- (async() =>{
-  try {
-    const res = await axios.get('http://localhost:5000/api/v1/products')
-    if(res.status === 200){
-      setProductList(res.data.data)
-    }  
-  } catch (error) {
-    console.log(error.message)
-  }
-  
- })()
-}, [])
+  useEffect(() => {
+    dispatch(listProducts());
+  }, [dispatch]);
 
+  const productList = [];
 
-    const renderProductCard = (data) => {
-       return  data.map(el =>{
-            return <ProductCard 
-            key = {el._id}
-            product_name={el.name}
-            product_image= {el.image}
-            product_price = {el.price}
-            vendor_name = {el.vendorName}
-            
-            />
-        })
-     }
+  const productsList = useSelector((state) => state.products);
+   const {loading, products, error} = productsList
+
+  // const loading = false;
+  // const error = false
+  // const products = true
+console.log(loading, products?.data, error)
+
+  const renderProductCard = (data) => {
+    console.log(data, 'data inside function')
+    return data.map((el) => {
+      return (
+        <ProductCard
+          key={el._id}
+          product_name={el.name}
+          product_image={el.image}
+          product_price={el.price}
+          vendor_name={el.vendorName}
+        />
+      );
+    });
+  };
   return (
     <>
-    <Header />
-    <Container maxWidth= 'xl' sx= {{marginTop: '15px'}}>
+      <Header />
+      <Container maxWidth="xl" sx={{ marginTop: "15px" }}>
         <Grid container spacing={2}>
-    {renderProductCard(productList)}
+         {loading ?  <Box
+            sx={{
+              
+              width: "100%",
+              height: '75vh',
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box sx={{
+               width: '10%',
+               height: '10%',
+               margin: '10px',
+               padding:'5px',
+               
+            }}>
+              <CircularProgress />
+            </Box>
+          </Box> : null}
+          {products?.data ? renderProductCard(products?.data) : null}
+          {error ? <ErrorScreeen /> : null}
         </Grid>
-    </Container>
-    <Footer />
+      </Container>
+      <Footer />
     </>
-  )
-}
+  );
+};
 
-export default HomeScreen
+export default HomeScreen;
