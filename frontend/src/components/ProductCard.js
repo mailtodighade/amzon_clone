@@ -8,6 +8,7 @@ import phone from '../assests/images/product_images/phone.jpg'
 import alexa from '../assests/images/product_images/alexa.jpg'
 import camera from '../assests/images/product_images/camera.jpg'
 import Grid from '@mui/material/Grid';
+import {Link} from 'react-router-dom'
 
 
 
@@ -61,7 +62,7 @@ const theme = createTheme({
     },
   });
 
-export default function ProductCard({product_name, vendor_name,product_price, product_image}) {
+export default function ProductCard({product_id, product_name, vendor_name,product_price, product_image}) {
     const [value, setValue] = React.useState(2.5);
   return (
     <ThemeProvider theme={theme}>
@@ -78,20 +79,24 @@ export default function ProductCard({product_name, vendor_name,product_price, pr
     }}
   >
     <Box
+    onClick = {() =>{ console.log(product_id, 'id')}}
         sx = {{
             width: '259.594px',
             height: '206.594px',
             backgroundColor: '#F8F8F8',
-            padding: '0px 8px 0 px'
+            padding: '0px 8px 0 px', 
+            cursor: 'pointer'
            
         }}>
-            <img src = {alexa}  style={{
+            <img src = {product_image}  style={{
                 maxWidth: '100%', 
                 maxHeight: '100%', 
                 display: 'block'
             }}/>
     </Box>
+    <Link  to = {`product/${product_id}`}>
       <Typography sx = {{marginLeft: '7px', marginTop: '5px'}} vairant = 'h1'>{product_name}</Typography>
+    </Link>
      <Typography sx = {{marginLeft: '7px'}} variant = 'subtitle1'>{vendor_name}</Typography>
      <Rating sx = {{width: '80px', height: '18px'}} name="read-only" value={value} readOnly precision={0.5}/>
      <Typography sx = {{marginLeft: '7px'}} variant = 'subtitle2'>{product_price}</Typography>

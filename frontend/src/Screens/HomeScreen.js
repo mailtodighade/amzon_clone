@@ -37,6 +37,7 @@ console.log(loading, products?.data, error)
           product_image={el.image}
           product_price={el.price}
           vendor_name={el.vendorName}
+          product_id = {el._id}
         />
       );
     });

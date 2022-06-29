@@ -12,3 +12,14 @@ export const listProducts = () => async (dispatch) => {
 };
 
 
+export const productDetail = (id) =>  async (dispatch) => {
+    try {
+        dispatch({type: 'PRODUCT_DETAIL_REQUEST',  payload: null});
+        let {data} = await axios.get(`http://localhost:5000/api/v1/products/${id}`);
+        dispatch({type: 'PRODUCT_DETAIL_SUCCESS', payload: data})
+    } catch (error) {
+        dispatch({type: 'PRODUCT_DETAIL_FAIL', payload: error.message})
+        
+    }
+}
+
