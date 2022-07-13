@@ -128,7 +128,10 @@ export default function Header() {
 
            
               <ShoppingCartIcon fontSize="large" />
+              <Link className = 'cart' to = '/cart'>
+
               <Typography sx={{ marginTop: "15px" }}>Cart</Typography>
+              </Link>
             
           </Toolbar>
         </AppBar>

@@ -94,7 +94,7 @@ export default function ProductCard({product_id, product_name, vendor_name,produ
                 display: 'block'
             }}/>
     </Box>
-    <Link  to = {`product/${product_id}`}>
+    <Link  className = 'product_link' to = {`product/${product_id}`}>
       <Typography sx = {{marginLeft: '7px', marginTop: '5px'}} vairant = 'h1'>{product_name}</Typography>
     </Link>
      <Typography sx = {{marginLeft: '7px'}} variant = 'subtitle1'>{vendor_name}</Typography>

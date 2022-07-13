@@ -3,3 +3,13 @@
     padding: 0;
     font-family: "Roboto";
 }
+
+.product_link {
+    text-decoration: none;
+
+}
+
+.cart {
+    text-decoration: none;
+    
+}
