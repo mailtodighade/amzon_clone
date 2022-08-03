@@ -25,10 +25,10 @@ const HomeScreen = () => {
   // const loading = false;
   // const error = false
   // const products = true
-console.log(loading, products?.data, error)
+
 
   const renderProductCard = (data) => {
-    console.log(data, 'data inside function')
+    
     return data.map((el) => {
       return (
         <ProductCard

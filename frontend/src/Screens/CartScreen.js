@@ -1,7 +1,9 @@
+import { useSelect } from '@mui/base';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import {useParams, useLocation} from 'react-router-dom'
-import {cartAction} from '../action/cartAction'
+import {addToCart} from '../action/cartAction'
+import Header from '../components/Header'
 
 const CartScreen = () => {
   const  dispatch = useDispatch();
@@ -12,17 +14,20 @@ const CartScreen = () => {
  const qty = location.search ? location.search.split('=')[1] : '';
  
 
- useEffect(() => {
-   dispatch(cartAction(productID, qty));
+useEffect(() =>{
+  if(productID){
+    
+    dispatch(addToCart(productID, qty));
+  }
+}, [dispatch, productID, qty])
 
- }, [])
- 
- const cart = useSelector(state => state.cart);
- console.log(cart, 'cart from state..')
-  
-  
+
+const {cartItems} = useSelector(state => state.cart)
+  console.log(cartItems, 'cartItmes...')
   return (
-    <div>CartScreen</div>
+    <>
+    <Header />
+    </>
   )
 }
 

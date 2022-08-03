@@ -251,6 +251,7 @@ const ProductScreen = () => {
                   }}
                 >
                   {productInfo?.productDetail?.data?.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
+                  
                 </Typography>
                 {productInfo?.productDetail?.data?.countInStock && productInfo?.productDetail?.data?.countInStock > 0 && (
                    <Autocomplete
